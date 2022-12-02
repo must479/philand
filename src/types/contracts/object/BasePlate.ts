@@ -24,6 +24,7 @@ import type {
   CallOverrides,
   ContractTransaction,
   Overrides,
+  PayableOverrides,
   PopulatedTransaction,
   Signer,
   utils,
@@ -71,21 +72,23 @@ export declare namespace BaseObject {
   };
 }
 
-export interface QuestObjectInterface extends utils.Interface {
+export interface BasePlateInterface extends utils.Interface {
   functions: {
     "allObjects(uint256)": FunctionFragment;
     "balanceOf(address,uint256)": FunctionFragment;
     "balanceOfBatch(address[],uint256[])": FunctionFragment;
     "baseMetadataURI()": FunctionFragment;
+    "batchBasePlate(uint256[])": FunctionFragment;
+    "batchBasePlateFromShop(address,uint256[])": FunctionFragment;
     "changeTokenPrice(uint256,uint256)": FunctionFragment;
-    "createObject(uint256,string,(uint8,uint8,uint8),address,uint256,uint256)": FunctionFragment;
+    "createBasePlate(uint256,string,(uint8,uint8,uint8),address,uint256,uint256)": FunctionFragment;
     "created(uint256)": FunctionFragment;
     "exists(uint256)": FunctionFragment;
     "getCreatorAddress(uint256)": FunctionFragment;
     "getExp(uint256)": FunctionFragment;
     "getMaxClaimed(uint256)": FunctionFragment;
-    "getObject(address,uint256)": FunctionFragment;
     "getObjectInfo(uint256)": FunctionFragment;
+    "getObjectsPrice(uint256[])": FunctionFragment;
     "getOpenForSale(uint256)": FunctionFragment;
     "getSize(uint256)": FunctionFragment;
     "getTokenPrice(uint256)": FunctionFragment;
@@ -129,15 +132,17 @@ export interface QuestObjectInterface extends utils.Interface {
       | "balanceOf"
       | "balanceOfBatch"
       | "baseMetadataURI"
+      | "batchBasePlate"
+      | "batchBasePlateFromShop"
       | "changeTokenPrice"
-      | "createObject"
+      | "createBasePlate"
       | "created"
       | "exists"
       | "getCreatorAddress"
       | "getExp"
       | "getMaxClaimed"
-      | "getObject"
       | "getObjectInfo"
+      | "getObjectsPrice"
       | "getOpenForSale"
       | "getSize"
       | "getTokenPrice"
@@ -192,11 +197,19 @@ export interface QuestObjectInterface extends utils.Interface {
     values?: undefined
   ): string;
   encodeFunctionData(
+    functionFragment: "batchBasePlate",
+    values: [PromiseOrValue<BigNumberish>[]]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "batchBasePlateFromShop",
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>[]]
+  ): string;
+  encodeFunctionData(
     functionFragment: "changeTokenPrice",
     values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "createObject",
+    functionFragment: "createBasePlate",
     values: [
       PromiseOrValue<BigNumberish>,
       PromiseOrValue<string>,
@@ -227,12 +240,12 @@ export interface QuestObjectInterface extends utils.Interface {
     values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "getObject",
-    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
-  ): string;
-  encodeFunctionData(
     functionFragment: "getObjectInfo",
     values: [PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "getObjectsPrice",
+    values: [PromiseOrValue<BigNumberish>[]]
   ): string;
   encodeFunctionData(
     functionFragment: "getOpenForSale",
@@ -392,11 +405,19 @@ export interface QuestObjectInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
+    functionFragment: "batchBasePlate",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "batchBasePlateFromShop",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "changeTokenPrice",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "createObject",
+    functionFragment: "createBasePlate",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "created", data: BytesLike): Result;
@@ -410,9 +431,12 @@ export interface QuestObjectInterface extends utils.Interface {
     functionFragment: "getMaxClaimed",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(functionFragment: "getObject", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "getObjectInfo",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "getObjectsPrice",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -535,8 +559,8 @@ export interface QuestObjectInterface extends utils.Interface {
   events: {
     "ApprovalForAll(address,address,bool)": EventFragment;
     "ChangeTokenPrice(uint256,uint256)": EventFragment;
-    "CreateQuestObject(uint256,string,tuple,address,uint256,uint256)": EventFragment;
-    "LogGetQuestObject(address,uint256)": EventFragment;
+    "CreateBasePlate(uint256,string,tuple,address,uint256,uint256)": EventFragment;
+    "LogBuyBasePlate(address,uint256,uint256)": EventFragment;
     "OwnershipGranted(address,address)": EventFragment;
     "OwnershipRemoved(address,address)": EventFragment;
     "PaymentReceivedOwner(uint256)": EventFragment;
@@ -559,8 +583,8 @@ export interface QuestObjectInterface extends utils.Interface {
 
   getEvent(nameOrSignatureOrTopic: "ApprovalForAll"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "ChangeTokenPrice"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "CreateQuestObject"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "LogGetQuestObject"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "CreateBasePlate"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "LogBuyBasePlate"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "OwnershipGranted"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "OwnershipRemoved"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "PaymentReceivedOwner"): EventFragment;
@@ -605,15 +629,15 @@ export type ChangeTokenPriceEvent = TypedEvent<
 export type ChangeTokenPriceEventFilter =
   TypedEventFilter<ChangeTokenPriceEvent>;
 
-export interface CreateQuestObjectEventObject {
+export interface CreateBasePlateEventObject {
   tokenId: BigNumber;
-  uri: string;
+  tokenUri: string;
   size: BaseObject.SizeStructOutput;
   creator: string;
   maxClaimed: BigNumber;
   price: BigNumber;
 }
-export type CreateQuestObjectEvent = TypedEvent<
+export type CreateBasePlateEvent = TypedEvent<
   [
     BigNumber,
     string,
@@ -622,23 +646,22 @@ export type CreateQuestObjectEvent = TypedEvent<
     BigNumber,
     BigNumber
   ],
-  CreateQuestObjectEventObject
+  CreateBasePlateEventObject
 >;
 
-export type CreateQuestObjectEventFilter =
-  TypedEventFilter<CreateQuestObjectEvent>;
+export type CreateBasePlateEventFilter = TypedEventFilter<CreateBasePlateEvent>;
 
-export interface LogGetQuestObjectEventObject {
+export interface LogBuyBasePlateEventObject {
   sender: string;
   tokenId: BigNumber;
+  value: BigNumber;
 }
-export type LogGetQuestObjectEvent = TypedEvent<
-  [string, BigNumber],
-  LogGetQuestObjectEventObject
+export type LogBuyBasePlateEvent = TypedEvent<
+  [string, BigNumber, BigNumber],
+  LogBuyBasePlateEventObject
 >;
 
-export type LogGetQuestObjectEventFilter =
-  TypedEventFilter<LogGetQuestObjectEvent>;
+export type LogBuyBasePlateEventFilter = TypedEventFilter<LogBuyBasePlateEvent>;
 
 export interface OwnershipGrantedEventObject {
   operator: string;
@@ -840,12 +863,12 @@ export type URIEvent = TypedEvent<[string, BigNumber], URIEventObject>;
 
 export type URIEventFilter = TypedEventFilter<URIEvent>;
 
-export interface QuestObject extends BaseContract {
+export interface BasePlate extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: QuestObjectInterface;
+  interface: BasePlateInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
@@ -904,19 +927,30 @@ export interface QuestObject extends BaseContract {
 
     baseMetadataURI(overrides?: CallOverrides): Promise<[string]>;
 
+    batchBasePlate(
+      tokenIds: PromiseOrValue<BigNumberish>[],
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    batchBasePlateFromShop(
+      to: PromiseOrValue<string>,
+      tokenIds: PromiseOrValue<BigNumberish>[],
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
     changeTokenPrice(
       tokenId: PromiseOrValue<BigNumberish>,
       newPrice: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    createObject(
+    createBasePlate(
       tokenId: PromiseOrValue<BigNumberish>,
       tokenUri: PromiseOrValue<string>,
       size: BaseObject.SizeStruct,
       creator: PromiseOrValue<string>,
       maxClaimed: PromiseOrValue<BigNumberish>,
-      exp: PromiseOrValue<BigNumberish>,
+      price: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -945,16 +979,15 @@ export interface QuestObject extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
-    getObject(
-      to: PromiseOrValue<string>,
-      tokenId: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
-
     getObjectInfo(
       tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<[BaseObject.ObjectStructOutput]>;
+
+    getObjectsPrice(
+      tokenIds: PromiseOrValue<BigNumberish>[],
+      overrides?: CallOverrides
+    ): Promise<[BigNumber]>;
 
     getOpenForSale(
       tokenId: PromiseOrValue<BigNumberish>,
@@ -1164,19 +1197,30 @@ export interface QuestObject extends BaseContract {
 
   baseMetadataURI(overrides?: CallOverrides): Promise<string>;
 
+  batchBasePlate(
+    tokenIds: PromiseOrValue<BigNumberish>[],
+    overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  batchBasePlateFromShop(
+    to: PromiseOrValue<string>,
+    tokenIds: PromiseOrValue<BigNumberish>[],
+    overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
   changeTokenPrice(
     tokenId: PromiseOrValue<BigNumberish>,
     newPrice: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  createObject(
+  createBasePlate(
     tokenId: PromiseOrValue<BigNumberish>,
     tokenUri: PromiseOrValue<string>,
     size: BaseObject.SizeStruct,
     creator: PromiseOrValue<string>,
     maxClaimed: PromiseOrValue<BigNumberish>,
-    exp: PromiseOrValue<BigNumberish>,
+    price: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -1205,16 +1249,15 @@ export interface QuestObject extends BaseContract {
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
-  getObject(
-    to: PromiseOrValue<string>,
-    tokenId: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
-
   getObjectInfo(
     tokenId: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
   ): Promise<BaseObject.ObjectStructOutput>;
+
+  getObjectsPrice(
+    tokenIds: PromiseOrValue<BigNumberish>[],
+    overrides?: CallOverrides
+  ): Promise<BigNumber>;
 
   getOpenForSale(
     tokenId: PromiseOrValue<BigNumberish>,
@@ -1424,19 +1467,30 @@ export interface QuestObject extends BaseContract {
 
     baseMetadataURI(overrides?: CallOverrides): Promise<string>;
 
+    batchBasePlate(
+      tokenIds: PromiseOrValue<BigNumberish>[],
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    batchBasePlateFromShop(
+      to: PromiseOrValue<string>,
+      tokenIds: PromiseOrValue<BigNumberish>[],
+      overrides?: CallOverrides
+    ): Promise<void>;
+
     changeTokenPrice(
       tokenId: PromiseOrValue<BigNumberish>,
       newPrice: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
 
-    createObject(
+    createBasePlate(
       tokenId: PromiseOrValue<BigNumberish>,
       tokenUri: PromiseOrValue<string>,
       size: BaseObject.SizeStruct,
       creator: PromiseOrValue<string>,
       maxClaimed: PromiseOrValue<BigNumberish>,
-      exp: PromiseOrValue<BigNumberish>,
+      price: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -1465,16 +1519,15 @@ export interface QuestObject extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    getObject(
-      to: PromiseOrValue<string>,
-      tokenId: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<void>;
-
     getObjectInfo(
       tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<BaseObject.ObjectStructOutput>;
+
+    getObjectsPrice(
+      tokenIds: PromiseOrValue<BigNumberish>[],
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
 
     getOpenForSale(
       tokenId: PromiseOrValue<BigNumberish>,
@@ -1668,31 +1721,33 @@ export interface QuestObject extends BaseContract {
       newPrice?: null
     ): ChangeTokenPriceEventFilter;
 
-    "CreateQuestObject(uint256,string,tuple,address,uint256,uint256)"(
+    "CreateBasePlate(uint256,string,tuple,address,uint256,uint256)"(
       tokenId?: null,
-      uri?: null,
+      tokenUri?: null,
       size?: null,
       creator?: null,
       maxClaimed?: null,
       price?: null
-    ): CreateQuestObjectEventFilter;
-    CreateQuestObject(
+    ): CreateBasePlateEventFilter;
+    CreateBasePlate(
       tokenId?: null,
-      uri?: null,
+      tokenUri?: null,
       size?: null,
       creator?: null,
       maxClaimed?: null,
       price?: null
-    ): CreateQuestObjectEventFilter;
+    ): CreateBasePlateEventFilter;
 
-    "LogGetQuestObject(address,uint256)"(
+    "LogBuyBasePlate(address,uint256,uint256)"(
       sender?: PromiseOrValue<string> | null,
-      tokenId?: null
-    ): LogGetQuestObjectEventFilter;
-    LogGetQuestObject(
+      tokenId?: null,
+      value?: null
+    ): LogBuyBasePlateEventFilter;
+    LogBuyBasePlate(
       sender?: PromiseOrValue<string> | null,
-      tokenId?: null
-    ): LogGetQuestObjectEventFilter;
+      tokenId?: null,
+      value?: null
+    ): LogBuyBasePlateEventFilter;
 
     "OwnershipGranted(address,address)"(
       operator?: PromiseOrValue<string> | null,
@@ -1838,19 +1893,30 @@ export interface QuestObject extends BaseContract {
 
     baseMetadataURI(overrides?: CallOverrides): Promise<BigNumber>;
 
+    batchBasePlate(
+      tokenIds: PromiseOrValue<BigNumberish>[],
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    batchBasePlateFromShop(
+      to: PromiseOrValue<string>,
+      tokenIds: PromiseOrValue<BigNumberish>[],
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
     changeTokenPrice(
       tokenId: PromiseOrValue<BigNumberish>,
       newPrice: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    createObject(
+    createBasePlate(
       tokenId: PromiseOrValue<BigNumberish>,
       tokenUri: PromiseOrValue<string>,
       size: BaseObject.SizeStruct,
       creator: PromiseOrValue<string>,
       maxClaimed: PromiseOrValue<BigNumberish>,
-      exp: PromiseOrValue<BigNumberish>,
+      price: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -1879,14 +1945,13 @@ export interface QuestObject extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    getObject(
-      to: PromiseOrValue<string>,
-      tokenId: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
-
     getObjectInfo(
       tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    getObjectsPrice(
+      tokenIds: PromiseOrValue<BigNumberish>[],
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
@@ -2079,19 +2144,30 @@ export interface QuestObject extends BaseContract {
 
     baseMetadataURI(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
+    batchBasePlate(
+      tokenIds: PromiseOrValue<BigNumberish>[],
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    batchBasePlateFromShop(
+      to: PromiseOrValue<string>,
+      tokenIds: PromiseOrValue<BigNumberish>[],
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
     changeTokenPrice(
       tokenId: PromiseOrValue<BigNumberish>,
       newPrice: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
-    createObject(
+    createBasePlate(
       tokenId: PromiseOrValue<BigNumberish>,
       tokenUri: PromiseOrValue<string>,
       size: BaseObject.SizeStruct,
       creator: PromiseOrValue<string>,
       maxClaimed: PromiseOrValue<BigNumberish>,
-      exp: PromiseOrValue<BigNumberish>,
+      price: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
@@ -2120,14 +2196,13 @@ export interface QuestObject extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    getObject(
-      to: PromiseOrValue<string>,
-      tokenId: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
-
     getObjectInfo(
       tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    getObjectsPrice(
+      tokenIds: PromiseOrValue<BigNumberish>[],
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 

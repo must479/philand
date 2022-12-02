@@ -8,6 +8,7 @@ import type {
   TypedEvent,
   TypedListener,
   OnEvent,
+  PromiseOrValue,
 } from "../../common";
 import type {
   FunctionFragment,
@@ -30,9 +31,9 @@ import type {
 
 export declare namespace BaseObject {
   export type SizeStruct = {
-    x: BigNumberish;
-    y: BigNumberish;
-    z: BigNumberish;
+    x: PromiseOrValue<BigNumberish>;
+    y: PromiseOrValue<BigNumberish>;
+    z: PromiseOrValue<BigNumberish>;
   };
 
   export type SizeStructOutput = [number, number, number] & {
@@ -42,13 +43,13 @@ export declare namespace BaseObject {
   };
 
   export type ObjectStruct = {
-    tokenURI: string;
+    tokenURI: PromiseOrValue<string>;
     size: BaseObject.SizeStruct;
-    creator: string;
-    maxClaimed: BigNumberish;
-    price: BigNumberish;
-    exp: BigNumberish;
-    forSale: boolean;
+    creator: PromiseOrValue<string>;
+    maxClaimed: PromiseOrValue<BigNumberish>;
+    price: PromiseOrValue<BigNumberish>;
+    exp: PromiseOrValue<BigNumberish>;
+    forSale: PromiseOrValue<boolean>;
   };
 
   export type ObjectStructOutput = [
@@ -82,17 +83,14 @@ export interface FreeObjectInterface extends utils.Interface {
     "createObject(uint256,string,(uint8,uint8,uint8),address)": FunctionFragment;
     "created(uint256)": FunctionFragment;
     "exists(uint256)": FunctionFragment;
-    "getBaseMetadataURI()": FunctionFragment;
     "getCreatorAddress(uint256)": FunctionFragment;
     "getExp(uint256)": FunctionFragment;
     "getMaxClaimed(uint256)": FunctionFragment;
     "getObjectInfo(uint256)": FunctionFragment;
     "getOpenForSale(uint256)": FunctionFragment;
-    "getRoyalityFee()": FunctionFragment;
     "getSize(uint256)": FunctionFragment;
     "getTokenPrice(uint256)": FunctionFragment;
     "getTokenURI(uint256)": FunctionFragment;
-    "getTreasuryAddress()": FunctionFragment;
     "isApprovedForAll(address,address)": FunctionFragment;
     "name()": FunctionFragment;
     "ownerCheck(address)": FunctionFragment;
@@ -138,17 +136,14 @@ export interface FreeObjectInterface extends utils.Interface {
       | "createObject"
       | "created"
       | "exists"
-      | "getBaseMetadataURI"
       | "getCreatorAddress"
       | "getExp"
       | "getMaxClaimed"
       | "getObjectInfo"
       | "getOpenForSale"
-      | "getRoyalityFee"
       | "getSize"
       | "getTokenPrice"
       | "getTokenURI"
-      | "getTreasuryAddress"
       | "isApprovedForAll"
       | "name"
       | "ownerCheck"
@@ -184,15 +179,15 @@ export interface FreeObjectInterface extends utils.Interface {
 
   encodeFunctionData(
     functionFragment: "allObjects",
-    values: [BigNumberish]
+    values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
     functionFragment: "balanceOf",
-    values: [string, BigNumberish]
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
     functionFragment: "balanceOfBatch",
-    values: [string[], BigNumberish[]]
+    values: [PromiseOrValue<string>[], PromiseOrValue<BigNumberish>[]]
   ): string;
   encodeFunctionData(
     functionFragment: "baseMetadataURI",
@@ -200,78 +195,74 @@ export interface FreeObjectInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "batchGetFreeObject",
-    values: [BigNumberish[]]
+    values: [PromiseOrValue<BigNumberish>[]]
   ): string;
   encodeFunctionData(
     functionFragment: "batchGetFreeObjectFromShop",
-    values: [string, BigNumberish[]]
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>[]]
   ): string;
   encodeFunctionData(
     functionFragment: "changeTokenPrice",
-    values: [BigNumberish, BigNumberish]
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
     functionFragment: "createObject",
-    values: [BigNumberish, string, BaseObject.SizeStruct, string]
+    values: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>,
+      BaseObject.SizeStruct,
+      PromiseOrValue<string>
+    ]
   ): string;
   encodeFunctionData(
     functionFragment: "created",
-    values: [BigNumberish]
+    values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
     functionFragment: "exists",
-    values: [BigNumberish]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "getBaseMetadataURI",
-    values?: undefined
+    values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
     functionFragment: "getCreatorAddress",
-    values: [BigNumberish]
+    values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
     functionFragment: "getExp",
-    values: [BigNumberish]
+    values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
     functionFragment: "getMaxClaimed",
-    values: [BigNumberish]
+    values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
     functionFragment: "getObjectInfo",
-    values: [BigNumberish]
+    values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
     functionFragment: "getOpenForSale",
-    values: [BigNumberish]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "getRoyalityFee",
-    values?: undefined
+    values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
     functionFragment: "getSize",
-    values: [BigNumberish]
+    values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
     functionFragment: "getTokenPrice",
-    values: [BigNumberish]
+    values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
     functionFragment: "getTokenURI",
-    values: [BigNumberish]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "getTreasuryAddress",
-    values?: undefined
+    values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
     functionFragment: "isApprovedForAll",
-    values: [string, string]
+    values: [PromiseOrValue<string>, PromiseOrValue<string>]
   ): string;
   encodeFunctionData(functionFragment: "name", values?: undefined): string;
-  encodeFunctionData(functionFragment: "ownerCheck", values: [string]): string;
+  encodeFunctionData(
+    functionFragment: "ownerCheck",
+    values: [PromiseOrValue<string>]
+  ): string;
   encodeFunctionData(
     functionFragment: "paymentBalanceOwner",
     values?: undefined
@@ -280,22 +271,37 @@ export interface FreeObjectInterface extends utils.Interface {
     functionFragment: "phiMapAddress",
     values?: undefined
   ): string;
-  encodeFunctionData(functionFragment: "removeOwner", values: [string]): string;
+  encodeFunctionData(
+    functionFragment: "removeOwner",
+    values: [PromiseOrValue<string>]
+  ): string;
   encodeFunctionData(
     functionFragment: "royalityFee",
     values?: undefined
   ): string;
   encodeFunctionData(
     functionFragment: "royaltyInfo",
-    values: [BigNumberish, BigNumberish]
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
     functionFragment: "safeBatchTransferFrom",
-    values: [string, string, BigNumberish[], BigNumberish[], BytesLike]
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>[],
+      PromiseOrValue<BigNumberish>[],
+      PromiseOrValue<BytesLike>
+    ]
   ): string;
   encodeFunctionData(
     functionFragment: "safeTransferFrom",
-    values: [string, string, BigNumberish, BigNumberish, BytesLike]
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BytesLike>
+    ]
   ): string;
   encodeFunctionData(
     functionFragment: "secondaryRoyalty",
@@ -303,52 +309,55 @@ export interface FreeObjectInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "setApprovalForAll",
-    values: [string, boolean]
+    values: [PromiseOrValue<string>, PromiseOrValue<boolean>]
   ): string;
   encodeFunctionData(
     functionFragment: "setCreatorAddress",
-    values: [BigNumberish, string]
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
     functionFragment: "setExp",
-    values: [BigNumberish, BigNumberish]
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
     functionFragment: "setMaxClaimed",
-    values: [BigNumberish, BigNumberish]
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
     functionFragment: "setOpenForSale",
-    values: [BigNumberish, boolean]
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<boolean>]
   ): string;
-  encodeFunctionData(functionFragment: "setOwner", values: [string]): string;
+  encodeFunctionData(
+    functionFragment: "setOwner",
+    values: [PromiseOrValue<string>]
+  ): string;
   encodeFunctionData(
     functionFragment: "setRoyalityFee",
-    values: [BigNumberish]
+    values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
     functionFragment: "setSecondaryRoyalityFee",
-    values: [BigNumberish]
+    values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
     functionFragment: "setShopAddress",
-    values: [string]
+    values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
     functionFragment: "setSize",
-    values: [BigNumberish, BaseObject.SizeStruct]
+    values: [PromiseOrValue<BigNumberish>, BaseObject.SizeStruct]
   ): string;
   encodeFunctionData(
     functionFragment: "setTokenURI",
-    values: [BigNumberish, string]
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
     functionFragment: "setTreasuryAddress",
-    values: [string]
+    values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
     functionFragment: "setbaseMetadataURI",
-    values: [string]
+    values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
     functionFragment: "shopAddress",
@@ -356,21 +365,24 @@ export interface FreeObjectInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "supportsInterface",
-    values: [BytesLike]
+    values: [PromiseOrValue<BytesLike>]
   ): string;
   encodeFunctionData(functionFragment: "symbol", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "totalSupply",
-    values: [BigNumberish]
+    values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
     functionFragment: "treasuryAddress",
     values?: undefined
   ): string;
-  encodeFunctionData(functionFragment: "uri", values: [BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: "uri",
+    values: [PromiseOrValue<BigNumberish>]
+  ): string;
   encodeFunctionData(
     functionFragment: "withdrawOwnerBalance",
-    values: [string]
+    values: [PromiseOrValue<string>]
   ): string;
 
   decodeFunctionResult(functionFragment: "allObjects", data: BytesLike): Result;
@@ -402,10 +414,6 @@ export interface FreeObjectInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: "created", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "exists", data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "getBaseMetadataURI",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
     functionFragment: "getCreatorAddress",
     data: BytesLike
   ): Result;
@@ -422,10 +430,6 @@ export interface FreeObjectInterface extends utils.Interface {
     functionFragment: "getOpenForSale",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(
-    functionFragment: "getRoyalityFee",
-    data: BytesLike
-  ): Result;
   decodeFunctionResult(functionFragment: "getSize", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "getTokenPrice",
@@ -433,10 +437,6 @@ export interface FreeObjectInterface extends utils.Interface {
   ): Result;
   decodeFunctionResult(
     functionFragment: "getTokenURI",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "getTreasuryAddress",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -870,7 +870,7 @@ export interface FreeObject extends BaseContract {
 
   functions: {
     allObjects(
-      arg0: BigNumberish,
+      arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<
       [
@@ -893,104 +893,104 @@ export interface FreeObject extends BaseContract {
     >;
 
     balanceOf(
-      account: string,
-      id: BigNumberish,
+      account: PromiseOrValue<string>,
+      id: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
     balanceOfBatch(
-      accounts: string[],
-      ids: BigNumberish[],
+      accounts: PromiseOrValue<string>[],
+      ids: PromiseOrValue<BigNumberish>[],
       overrides?: CallOverrides
     ): Promise<[BigNumber[]]>;
 
     baseMetadataURI(overrides?: CallOverrides): Promise<[string]>;
 
     batchGetFreeObject(
-      tokenIds: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> }
+      tokenIds: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     batchGetFreeObjectFromShop(
-      to: string,
-      tokenIds: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> }
+      to: PromiseOrValue<string>,
+      tokenIds: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     changeTokenPrice(
-      tokenId: BigNumberish,
-      newPrice: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      tokenId: PromiseOrValue<BigNumberish>,
+      newPrice: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     createObject(
-      tokenId: BigNumberish,
-      tokenUri: string,
+      tokenId: PromiseOrValue<BigNumberish>,
+      tokenUri: PromiseOrValue<string>,
       size: BaseObject.SizeStruct,
-      creator: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      creator: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    created(arg0: BigNumberish, overrides?: CallOverrides): Promise<[boolean]>;
+    created(
+      arg0: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<[boolean]>;
 
-    exists(id: BigNumberish, overrides?: CallOverrides): Promise<[boolean]>;
-
-    getBaseMetadataURI(overrides?: CallOverrides): Promise<[string]>;
+    exists(
+      id: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<[boolean]>;
 
     getCreatorAddress(
-      tokenId: BigNumberish,
+      tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<[string]>;
 
     getExp(
-      tokenId: BigNumberish,
+      tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
     getMaxClaimed(
-      tokenId: BigNumberish,
+      tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
     getObjectInfo(
-      tokenId: BigNumberish,
+      tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<[BaseObject.ObjectStructOutput]>;
 
     getOpenForSale(
-      tokenId: BigNumberish,
+      tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<[boolean]>;
 
-    getRoyalityFee(overrides?: CallOverrides): Promise<[BigNumber]>;
-
     getSize(
-      tokenId: BigNumberish,
+      tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<[BaseObject.SizeStructOutput]>;
 
     getTokenPrice(
-      tokenId: BigNumberish,
+      tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
     getTokenURI(
-      tokenId: BigNumberish,
+      tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<[string]>;
 
-    getTreasuryAddress(overrides?: CallOverrides): Promise<[string]>;
-
     isApprovedForAll(
-      account: string,
-      operator: string,
+      account: PromiseOrValue<string>,
+      operator: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<[boolean]>;
 
     name(overrides?: CallOverrides): Promise<[string]>;
 
     ownerCheck(
-      targetAddress: string,
+      targetAddress: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<[boolean]>;
 
@@ -999,138 +999,141 @@ export interface FreeObject extends BaseContract {
     phiMapAddress(overrides?: CallOverrides): Promise<[string]>;
 
     removeOwner(
-      oldOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      oldOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     royalityFee(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     royaltyInfo(
-      arg0: BigNumberish,
-      salePrice: BigNumberish,
+      arg0: PromiseOrValue<BigNumberish>,
+      salePrice: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<
       [string, BigNumber] & { receiver: string; royaltyAmount: BigNumber }
     >;
 
     safeBatchTransferFrom(
-      from: string,
-      to: string,
-      ids: BigNumberish[],
-      amounts: BigNumberish[],
-      data: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      ids: PromiseOrValue<BigNumberish>[],
+      amounts: PromiseOrValue<BigNumberish>[],
+      data: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     safeTransferFrom(
-      from: string,
-      to: string,
-      id: BigNumberish,
-      amount: BigNumberish,
-      data: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      id: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      data: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     secondaryRoyalty(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     setApprovalForAll(
-      operator: string,
-      approved: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      operator: PromiseOrValue<string>,
+      approved: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     setCreatorAddress(
-      tokenId: BigNumberish,
-      creator: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      tokenId: PromiseOrValue<BigNumberish>,
+      creator: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     setExp(
-      tokenId: BigNumberish,
-      exp: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      tokenId: PromiseOrValue<BigNumberish>,
+      exp: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     setMaxClaimed(
-      tokenId: BigNumberish,
-      newMaxClaimed: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      tokenId: PromiseOrValue<BigNumberish>,
+      newMaxClaimed: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     setOpenForSale(
-      tokenId: BigNumberish,
-      check: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      tokenId: PromiseOrValue<BigNumberish>,
+      check: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     setOwner(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     setRoyalityFee(
-      newRoyalityFee: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      newRoyalityFee: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     setSecondaryRoyalityFee(
-      newSecondaryRoyalty: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      newSecondaryRoyalty: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     setShopAddress(
-      _shopAddress: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      _shopAddress: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     setSize(
-      tokenId: BigNumberish,
+      tokenId: PromiseOrValue<BigNumberish>,
       size: BaseObject.SizeStruct,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     setTokenURI(
-      tokenId: BigNumberish,
-      uri: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      tokenId: PromiseOrValue<BigNumberish>,
+      uri: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     setTreasuryAddress(
-      newTreasuryAddress: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      newTreasuryAddress: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     setbaseMetadataURI(
-      newBaseMetadataURI: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      newBaseMetadataURI: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     shopAddress(overrides?: CallOverrides): Promise<[string]>;
 
     supportsInterface(
-      interfaceId: BytesLike,
+      interfaceId: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
     ): Promise<[boolean]>;
 
     symbol(overrides?: CallOverrides): Promise<[string]>;
 
     totalSupply(
-      id: BigNumberish,
+      id: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
     treasuryAddress(overrides?: CallOverrides): Promise<[string]>;
 
-    uri(tokenId: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
+    uri(
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<[string]>;
 
     withdrawOwnerBalance(
-      withdrawTo: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      withdrawTo: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
   };
 
   allObjects(
-    arg0: BigNumberish,
+    arg0: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
   ): Promise<
     [
@@ -1153,101 +1156,104 @@ export interface FreeObject extends BaseContract {
   >;
 
   balanceOf(
-    account: string,
-    id: BigNumberish,
+    account: PromiseOrValue<string>,
+    id: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
   balanceOfBatch(
-    accounts: string[],
-    ids: BigNumberish[],
+    accounts: PromiseOrValue<string>[],
+    ids: PromiseOrValue<BigNumberish>[],
     overrides?: CallOverrides
   ): Promise<BigNumber[]>;
 
   baseMetadataURI(overrides?: CallOverrides): Promise<string>;
 
   batchGetFreeObject(
-    tokenIds: BigNumberish[],
-    overrides?: Overrides & { from?: string | Promise<string> }
+    tokenIds: PromiseOrValue<BigNumberish>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   batchGetFreeObjectFromShop(
-    to: string,
-    tokenIds: BigNumberish[],
-    overrides?: Overrides & { from?: string | Promise<string> }
+    to: PromiseOrValue<string>,
+    tokenIds: PromiseOrValue<BigNumberish>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   changeTokenPrice(
-    tokenId: BigNumberish,
-    newPrice: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    tokenId: PromiseOrValue<BigNumberish>,
+    newPrice: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   createObject(
-    tokenId: BigNumberish,
-    tokenUri: string,
+    tokenId: PromiseOrValue<BigNumberish>,
+    tokenUri: PromiseOrValue<string>,
     size: BaseObject.SizeStruct,
-    creator: string,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    creator: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  created(arg0: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+  created(
+    arg0: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides
+  ): Promise<boolean>;
 
-  exists(id: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
-
-  getBaseMetadataURI(overrides?: CallOverrides): Promise<string>;
+  exists(
+    id: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides
+  ): Promise<boolean>;
 
   getCreatorAddress(
-    tokenId: BigNumberish,
+    tokenId: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
   ): Promise<string>;
 
-  getExp(tokenId: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  getExp(
+    tokenId: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides
+  ): Promise<BigNumber>;
 
   getMaxClaimed(
-    tokenId: BigNumberish,
+    tokenId: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
   getObjectInfo(
-    tokenId: BigNumberish,
+    tokenId: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
   ): Promise<BaseObject.ObjectStructOutput>;
 
   getOpenForSale(
-    tokenId: BigNumberish,
+    tokenId: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
   ): Promise<boolean>;
 
-  getRoyalityFee(overrides?: CallOverrides): Promise<BigNumber>;
-
   getSize(
-    tokenId: BigNumberish,
+    tokenId: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
   ): Promise<BaseObject.SizeStructOutput>;
 
   getTokenPrice(
-    tokenId: BigNumberish,
+    tokenId: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
   getTokenURI(
-    tokenId: BigNumberish,
+    tokenId: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
   ): Promise<string>;
 
-  getTreasuryAddress(overrides?: CallOverrides): Promise<string>;
-
   isApprovedForAll(
-    account: string,
-    operator: string,
+    account: PromiseOrValue<string>,
+    operator: PromiseOrValue<string>,
     overrides?: CallOverrides
   ): Promise<boolean>;
 
   name(overrides?: CallOverrides): Promise<string>;
 
   ownerCheck(
-    targetAddress: string,
+    targetAddress: PromiseOrValue<string>,
     overrides?: CallOverrides
   ): Promise<boolean>;
 
@@ -1256,135 +1262,141 @@ export interface FreeObject extends BaseContract {
   phiMapAddress(overrides?: CallOverrides): Promise<string>;
 
   removeOwner(
-    oldOwner: string,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    oldOwner: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   royalityFee(overrides?: CallOverrides): Promise<BigNumber>;
 
   royaltyInfo(
-    arg0: BigNumberish,
-    salePrice: BigNumberish,
+    arg0: PromiseOrValue<BigNumberish>,
+    salePrice: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
   ): Promise<
     [string, BigNumber] & { receiver: string; royaltyAmount: BigNumber }
   >;
 
   safeBatchTransferFrom(
-    from: string,
-    to: string,
-    ids: BigNumberish[],
-    amounts: BigNumberish[],
-    data: BytesLike,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    from: PromiseOrValue<string>,
+    to: PromiseOrValue<string>,
+    ids: PromiseOrValue<BigNumberish>[],
+    amounts: PromiseOrValue<BigNumberish>[],
+    data: PromiseOrValue<BytesLike>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   safeTransferFrom(
-    from: string,
-    to: string,
-    id: BigNumberish,
-    amount: BigNumberish,
-    data: BytesLike,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    from: PromiseOrValue<string>,
+    to: PromiseOrValue<string>,
+    id: PromiseOrValue<BigNumberish>,
+    amount: PromiseOrValue<BigNumberish>,
+    data: PromiseOrValue<BytesLike>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   secondaryRoyalty(overrides?: CallOverrides): Promise<BigNumber>;
 
   setApprovalForAll(
-    operator: string,
-    approved: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    operator: PromiseOrValue<string>,
+    approved: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   setCreatorAddress(
-    tokenId: BigNumberish,
-    creator: string,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    tokenId: PromiseOrValue<BigNumberish>,
+    creator: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   setExp(
-    tokenId: BigNumberish,
-    exp: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    tokenId: PromiseOrValue<BigNumberish>,
+    exp: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   setMaxClaimed(
-    tokenId: BigNumberish,
-    newMaxClaimed: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    tokenId: PromiseOrValue<BigNumberish>,
+    newMaxClaimed: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   setOpenForSale(
-    tokenId: BigNumberish,
-    check: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    tokenId: PromiseOrValue<BigNumberish>,
+    check: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   setOwner(
-    newOwner: string,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    newOwner: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   setRoyalityFee(
-    newRoyalityFee: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    newRoyalityFee: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   setSecondaryRoyalityFee(
-    newSecondaryRoyalty: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    newSecondaryRoyalty: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   setShopAddress(
-    _shopAddress: string,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    _shopAddress: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   setSize(
-    tokenId: BigNumberish,
+    tokenId: PromiseOrValue<BigNumberish>,
     size: BaseObject.SizeStruct,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   setTokenURI(
-    tokenId: BigNumberish,
-    uri: string,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    tokenId: PromiseOrValue<BigNumberish>,
+    uri: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   setTreasuryAddress(
-    newTreasuryAddress: string,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    newTreasuryAddress: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   setbaseMetadataURI(
-    newBaseMetadataURI: string,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    newBaseMetadataURI: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   shopAddress(overrides?: CallOverrides): Promise<string>;
 
   supportsInterface(
-    interfaceId: BytesLike,
+    interfaceId: PromiseOrValue<BytesLike>,
     overrides?: CallOverrides
   ): Promise<boolean>;
 
   symbol(overrides?: CallOverrides): Promise<string>;
 
-  totalSupply(id: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  totalSupply(
+    id: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides
+  ): Promise<BigNumber>;
 
   treasuryAddress(overrides?: CallOverrides): Promise<string>;
 
-  uri(tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>;
+  uri(
+    tokenId: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides
+  ): Promise<string>;
 
   withdrawOwnerBalance(
-    withdrawTo: string,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    withdrawTo: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   callStatic: {
     allObjects(
-      arg0: BigNumberish,
+      arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<
       [
@@ -1407,104 +1419,104 @@ export interface FreeObject extends BaseContract {
     >;
 
     balanceOf(
-      account: string,
-      id: BigNumberish,
+      account: PromiseOrValue<string>,
+      id: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     balanceOfBatch(
-      accounts: string[],
-      ids: BigNumberish[],
+      accounts: PromiseOrValue<string>[],
+      ids: PromiseOrValue<BigNumberish>[],
       overrides?: CallOverrides
     ): Promise<BigNumber[]>;
 
     baseMetadataURI(overrides?: CallOverrides): Promise<string>;
 
     batchGetFreeObject(
-      tokenIds: BigNumberish[],
+      tokenIds: PromiseOrValue<BigNumberish>[],
       overrides?: CallOverrides
     ): Promise<void>;
 
     batchGetFreeObjectFromShop(
-      to: string,
-      tokenIds: BigNumberish[],
+      to: PromiseOrValue<string>,
+      tokenIds: PromiseOrValue<BigNumberish>[],
       overrides?: CallOverrides
     ): Promise<void>;
 
     changeTokenPrice(
-      tokenId: BigNumberish,
-      newPrice: BigNumberish,
+      tokenId: PromiseOrValue<BigNumberish>,
+      newPrice: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
 
     createObject(
-      tokenId: BigNumberish,
-      tokenUri: string,
+      tokenId: PromiseOrValue<BigNumberish>,
+      tokenUri: PromiseOrValue<string>,
       size: BaseObject.SizeStruct,
-      creator: string,
+      creator: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<void>;
 
-    created(arg0: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    created(
+      arg0: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<boolean>;
 
-    exists(id: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
-
-    getBaseMetadataURI(overrides?: CallOverrides): Promise<string>;
+    exists(
+      id: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<boolean>;
 
     getCreatorAddress(
-      tokenId: BigNumberish,
+      tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<string>;
 
     getExp(
-      tokenId: BigNumberish,
+      tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     getMaxClaimed(
-      tokenId: BigNumberish,
+      tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     getObjectInfo(
-      tokenId: BigNumberish,
+      tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<BaseObject.ObjectStructOutput>;
 
     getOpenForSale(
-      tokenId: BigNumberish,
+      tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<boolean>;
 
-    getRoyalityFee(overrides?: CallOverrides): Promise<BigNumber>;
-
     getSize(
-      tokenId: BigNumberish,
+      tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<BaseObject.SizeStructOutput>;
 
     getTokenPrice(
-      tokenId: BigNumberish,
+      tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     getTokenURI(
-      tokenId: BigNumberish,
+      tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<string>;
 
-    getTreasuryAddress(overrides?: CallOverrides): Promise<string>;
-
     isApprovedForAll(
-      account: string,
-      operator: string,
+      account: PromiseOrValue<string>,
+      operator: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<boolean>;
 
     name(overrides?: CallOverrides): Promise<string>;
 
     ownerCheck(
-      targetAddress: string,
+      targetAddress: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<boolean>;
 
@@ -1512,140 +1524,149 @@ export interface FreeObject extends BaseContract {
 
     phiMapAddress(overrides?: CallOverrides): Promise<string>;
 
-    removeOwner(oldOwner: string, overrides?: CallOverrides): Promise<void>;
+    removeOwner(
+      oldOwner: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<void>;
 
     royalityFee(overrides?: CallOverrides): Promise<BigNumber>;
 
     royaltyInfo(
-      arg0: BigNumberish,
-      salePrice: BigNumberish,
+      arg0: PromiseOrValue<BigNumberish>,
+      salePrice: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<
       [string, BigNumber] & { receiver: string; royaltyAmount: BigNumber }
     >;
 
     safeBatchTransferFrom(
-      from: string,
-      to: string,
-      ids: BigNumberish[],
-      amounts: BigNumberish[],
-      data: BytesLike,
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      ids: PromiseOrValue<BigNumberish>[],
+      amounts: PromiseOrValue<BigNumberish>[],
+      data: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
     ): Promise<void>;
 
     safeTransferFrom(
-      from: string,
-      to: string,
-      id: BigNumberish,
-      amount: BigNumberish,
-      data: BytesLike,
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      id: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      data: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
     ): Promise<void>;
 
     secondaryRoyalty(overrides?: CallOverrides): Promise<BigNumber>;
 
     setApprovalForAll(
-      operator: string,
-      approved: boolean,
+      operator: PromiseOrValue<string>,
+      approved: PromiseOrValue<boolean>,
       overrides?: CallOverrides
     ): Promise<void>;
 
     setCreatorAddress(
-      tokenId: BigNumberish,
-      creator: string,
+      tokenId: PromiseOrValue<BigNumberish>,
+      creator: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<void>;
 
     setExp(
-      tokenId: BigNumberish,
-      exp: BigNumberish,
+      tokenId: PromiseOrValue<BigNumberish>,
+      exp: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
 
     setMaxClaimed(
-      tokenId: BigNumberish,
-      newMaxClaimed: BigNumberish,
+      tokenId: PromiseOrValue<BigNumberish>,
+      newMaxClaimed: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
 
     setOpenForSale(
-      tokenId: BigNumberish,
-      check: boolean,
+      tokenId: PromiseOrValue<BigNumberish>,
+      check: PromiseOrValue<boolean>,
       overrides?: CallOverrides
     ): Promise<void>;
 
-    setOwner(newOwner: string, overrides?: CallOverrides): Promise<void>;
+    setOwner(
+      newOwner: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<void>;
 
     setRoyalityFee(
-      newRoyalityFee: BigNumberish,
+      newRoyalityFee: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
 
     setSecondaryRoyalityFee(
-      newSecondaryRoyalty: BigNumberish,
+      newSecondaryRoyalty: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
 
     setShopAddress(
-      _shopAddress: string,
+      _shopAddress: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<void>;
 
     setSize(
-      tokenId: BigNumberish,
+      tokenId: PromiseOrValue<BigNumberish>,
       size: BaseObject.SizeStruct,
       overrides?: CallOverrides
     ): Promise<void>;
 
     setTokenURI(
-      tokenId: BigNumberish,
-      uri: string,
+      tokenId: PromiseOrValue<BigNumberish>,
+      uri: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<void>;
 
     setTreasuryAddress(
-      newTreasuryAddress: string,
+      newTreasuryAddress: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<void>;
 
     setbaseMetadataURI(
-      newBaseMetadataURI: string,
+      newBaseMetadataURI: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<void>;
 
     shopAddress(overrides?: CallOverrides): Promise<string>;
 
     supportsInterface(
-      interfaceId: BytesLike,
+      interfaceId: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
     ): Promise<boolean>;
 
     symbol(overrides?: CallOverrides): Promise<string>;
 
     totalSupply(
-      id: BigNumberish,
+      id: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     treasuryAddress(overrides?: CallOverrides): Promise<string>;
 
-    uri(tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>;
+    uri(
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<string>;
 
     withdrawOwnerBalance(
-      withdrawTo: string,
+      withdrawTo: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<void>;
   };
 
   filters: {
     "ApprovalForAll(address,address,bool)"(
-      account?: string | null,
-      operator?: string | null,
+      account?: PromiseOrValue<string> | null,
+      operator?: PromiseOrValue<string> | null,
       approved?: null
     ): ApprovalForAllEventFilter;
     ApprovalForAll(
-      account?: string | null,
-      operator?: string | null,
+      account?: PromiseOrValue<string> | null,
+      operator?: PromiseOrValue<string> | null,
       approved?: null
     ): ApprovalForAllEventFilter;
 
@@ -1674,30 +1695,30 @@ export interface FreeObject extends BaseContract {
     ): CreateFreeObjectEventFilter;
 
     "LogGetObject(address,uint256)"(
-      sender?: string | null,
+      sender?: PromiseOrValue<string> | null,
       tokenId?: null
     ): LogGetObjectEventFilter;
     LogGetObject(
-      sender?: string | null,
+      sender?: PromiseOrValue<string> | null,
       tokenId?: null
     ): LogGetObjectEventFilter;
 
     "OwnershipGranted(address,address)"(
-      operator?: string | null,
-      target?: string | null
+      operator?: PromiseOrValue<string> | null,
+      target?: PromiseOrValue<string> | null
     ): OwnershipGrantedEventFilter;
     OwnershipGranted(
-      operator?: string | null,
-      target?: string | null
+      operator?: PromiseOrValue<string> | null,
+      target?: PromiseOrValue<string> | null
     ): OwnershipGrantedEventFilter;
 
     "OwnershipRemoved(address,address)"(
-      operator?: string | null,
-      target?: string | null
+      operator?: PromiseOrValue<string> | null,
+      target?: PromiseOrValue<string> | null
     ): OwnershipRemovedEventFilter;
     OwnershipRemoved(
-      operator?: string | null,
-      target?: string | null
+      operator?: PromiseOrValue<string> | null,
+      target?: PromiseOrValue<string> | null
     ): OwnershipRemovedEventFilter;
 
     "PaymentReceivedOwner(uint256)"(
@@ -1770,147 +1791,147 @@ export interface FreeObject extends BaseContract {
     SetbaseMetadataURI(baseuri?: null): SetbaseMetadataURIEventFilter;
 
     "TransferBatch(address,address,address,uint256[],uint256[])"(
-      operator?: string | null,
-      from?: string | null,
-      to?: string | null,
+      operator?: PromiseOrValue<string> | null,
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
       ids?: null,
       values?: null
     ): TransferBatchEventFilter;
     TransferBatch(
-      operator?: string | null,
-      from?: string | null,
-      to?: string | null,
+      operator?: PromiseOrValue<string> | null,
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
       ids?: null,
       values?: null
     ): TransferBatchEventFilter;
 
     "TransferSingle(address,address,address,uint256,uint256)"(
-      operator?: string | null,
-      from?: string | null,
-      to?: string | null,
+      operator?: PromiseOrValue<string> | null,
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
       id?: null,
       value?: null
     ): TransferSingleEventFilter;
     TransferSingle(
-      operator?: string | null,
-      from?: string | null,
-      to?: string | null,
+      operator?: PromiseOrValue<string> | null,
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
       id?: null,
       value?: null
     ): TransferSingleEventFilter;
 
     "URI(string,uint256)"(
       value?: null,
-      id?: BigNumberish | null
+      id?: PromiseOrValue<BigNumberish> | null
     ): URIEventFilter;
-    URI(value?: null, id?: BigNumberish | null): URIEventFilter;
+    URI(value?: null, id?: PromiseOrValue<BigNumberish> | null): URIEventFilter;
   };
 
   estimateGas: {
     allObjects(
-      arg0: BigNumberish,
+      arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     balanceOf(
-      account: string,
-      id: BigNumberish,
+      account: PromiseOrValue<string>,
+      id: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     balanceOfBatch(
-      accounts: string[],
-      ids: BigNumberish[],
+      accounts: PromiseOrValue<string>[],
+      ids: PromiseOrValue<BigNumberish>[],
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     baseMetadataURI(overrides?: CallOverrides): Promise<BigNumber>;
 
     batchGetFreeObject(
-      tokenIds: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> }
+      tokenIds: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     batchGetFreeObjectFromShop(
-      to: string,
-      tokenIds: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> }
+      to: PromiseOrValue<string>,
+      tokenIds: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     changeTokenPrice(
-      tokenId: BigNumberish,
-      newPrice: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      tokenId: PromiseOrValue<BigNumberish>,
+      newPrice: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     createObject(
-      tokenId: BigNumberish,
-      tokenUri: string,
+      tokenId: PromiseOrValue<BigNumberish>,
+      tokenUri: PromiseOrValue<string>,
       size: BaseObject.SizeStruct,
-      creator: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      creator: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    created(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    created(
+      arg0: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
 
-    exists(id: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
-
-    getBaseMetadataURI(overrides?: CallOverrides): Promise<BigNumber>;
+    exists(
+      id: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
 
     getCreatorAddress(
-      tokenId: BigNumberish,
+      tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     getExp(
-      tokenId: BigNumberish,
+      tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     getMaxClaimed(
-      tokenId: BigNumberish,
+      tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     getObjectInfo(
-      tokenId: BigNumberish,
+      tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     getOpenForSale(
-      tokenId: BigNumberish,
+      tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    getRoyalityFee(overrides?: CallOverrides): Promise<BigNumber>;
-
     getSize(
-      tokenId: BigNumberish,
+      tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     getTokenPrice(
-      tokenId: BigNumberish,
+      tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     getTokenURI(
-      tokenId: BigNumberish,
+      tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    getTreasuryAddress(overrides?: CallOverrides): Promise<BigNumber>;
-
     isApprovedForAll(
-      account: string,
-      operator: string,
+      account: PromiseOrValue<string>,
+      operator: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     name(overrides?: CallOverrides): Promise<BigNumber>;
 
     ownerCheck(
-      targetAddress: string,
+      targetAddress: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
@@ -1919,249 +1940,242 @@ export interface FreeObject extends BaseContract {
     phiMapAddress(overrides?: CallOverrides): Promise<BigNumber>;
 
     removeOwner(
-      oldOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      oldOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     royalityFee(overrides?: CallOverrides): Promise<BigNumber>;
 
     royaltyInfo(
-      arg0: BigNumberish,
-      salePrice: BigNumberish,
+      arg0: PromiseOrValue<BigNumberish>,
+      salePrice: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     safeBatchTransferFrom(
-      from: string,
-      to: string,
-      ids: BigNumberish[],
-      amounts: BigNumberish[],
-      data: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      ids: PromiseOrValue<BigNumberish>[],
+      amounts: PromiseOrValue<BigNumberish>[],
+      data: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     safeTransferFrom(
-      from: string,
-      to: string,
-      id: BigNumberish,
-      amount: BigNumberish,
-      data: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      id: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      data: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     secondaryRoyalty(overrides?: CallOverrides): Promise<BigNumber>;
 
     setApprovalForAll(
-      operator: string,
-      approved: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      operator: PromiseOrValue<string>,
+      approved: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     setCreatorAddress(
-      tokenId: BigNumberish,
-      creator: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      tokenId: PromiseOrValue<BigNumberish>,
+      creator: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     setExp(
-      tokenId: BigNumberish,
-      exp: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      tokenId: PromiseOrValue<BigNumberish>,
+      exp: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     setMaxClaimed(
-      tokenId: BigNumberish,
-      newMaxClaimed: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      tokenId: PromiseOrValue<BigNumberish>,
+      newMaxClaimed: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     setOpenForSale(
-      tokenId: BigNumberish,
-      check: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      tokenId: PromiseOrValue<BigNumberish>,
+      check: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     setOwner(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     setRoyalityFee(
-      newRoyalityFee: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      newRoyalityFee: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     setSecondaryRoyalityFee(
-      newSecondaryRoyalty: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      newSecondaryRoyalty: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     setShopAddress(
-      _shopAddress: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      _shopAddress: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     setSize(
-      tokenId: BigNumberish,
+      tokenId: PromiseOrValue<BigNumberish>,
       size: BaseObject.SizeStruct,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     setTokenURI(
-      tokenId: BigNumberish,
-      uri: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      tokenId: PromiseOrValue<BigNumberish>,
+      uri: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     setTreasuryAddress(
-      newTreasuryAddress: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      newTreasuryAddress: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     setbaseMetadataURI(
-      newBaseMetadataURI: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      newBaseMetadataURI: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     shopAddress(overrides?: CallOverrides): Promise<BigNumber>;
 
     supportsInterface(
-      interfaceId: BytesLike,
+      interfaceId: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     symbol(overrides?: CallOverrides): Promise<BigNumber>;
 
     totalSupply(
-      id: BigNumberish,
+      id: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     treasuryAddress(overrides?: CallOverrides): Promise<BigNumber>;
 
-    uri(tokenId: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    uri(
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
 
     withdrawOwnerBalance(
-      withdrawTo: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      withdrawTo: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
     allObjects(
-      arg0: BigNumberish,
+      arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     balanceOf(
-      account: string,
-      id: BigNumberish,
+      account: PromiseOrValue<string>,
+      id: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     balanceOfBatch(
-      accounts: string[],
-      ids: BigNumberish[],
+      accounts: PromiseOrValue<string>[],
+      ids: PromiseOrValue<BigNumberish>[],
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     baseMetadataURI(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     batchGetFreeObject(
-      tokenIds: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> }
+      tokenIds: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     batchGetFreeObjectFromShop(
-      to: string,
-      tokenIds: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> }
+      to: PromiseOrValue<string>,
+      tokenIds: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     changeTokenPrice(
-      tokenId: BigNumberish,
-      newPrice: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      tokenId: PromiseOrValue<BigNumberish>,
+      newPrice: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     createObject(
-      tokenId: BigNumberish,
-      tokenUri: string,
+      tokenId: PromiseOrValue<BigNumberish>,
+      tokenUri: PromiseOrValue<string>,
       size: BaseObject.SizeStruct,
-      creator: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      creator: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     created(
-      arg0: BigNumberish,
+      arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     exists(
-      id: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    getBaseMetadataURI(
+      id: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     getCreatorAddress(
-      tokenId: BigNumberish,
+      tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     getExp(
-      tokenId: BigNumberish,
+      tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     getMaxClaimed(
-      tokenId: BigNumberish,
+      tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     getObjectInfo(
-      tokenId: BigNumberish,
+      tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     getOpenForSale(
-      tokenId: BigNumberish,
+      tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    getRoyalityFee(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
     getSize(
-      tokenId: BigNumberish,
+      tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     getTokenPrice(
-      tokenId: BigNumberish,
+      tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     getTokenURI(
-      tokenId: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    getTreasuryAddress(
+      tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     isApprovedForAll(
-      account: string,
-      operator: string,
+      account: PromiseOrValue<string>,
+      operator: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     name(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     ownerCheck(
-      targetAddress: string,
+      targetAddress: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
@@ -2172,134 +2186,134 @@ export interface FreeObject extends BaseContract {
     phiMapAddress(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     removeOwner(
-      oldOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      oldOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     royalityFee(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     royaltyInfo(
-      arg0: BigNumberish,
-      salePrice: BigNumberish,
+      arg0: PromiseOrValue<BigNumberish>,
+      salePrice: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     safeBatchTransferFrom(
-      from: string,
-      to: string,
-      ids: BigNumberish[],
-      amounts: BigNumberish[],
-      data: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      ids: PromiseOrValue<BigNumberish>[],
+      amounts: PromiseOrValue<BigNumberish>[],
+      data: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     safeTransferFrom(
-      from: string,
-      to: string,
-      id: BigNumberish,
-      amount: BigNumberish,
-      data: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      id: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      data: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     secondaryRoyalty(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     setApprovalForAll(
-      operator: string,
-      approved: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      operator: PromiseOrValue<string>,
+      approved: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     setCreatorAddress(
-      tokenId: BigNumberish,
-      creator: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      tokenId: PromiseOrValue<BigNumberish>,
+      creator: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     setExp(
-      tokenId: BigNumberish,
-      exp: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      tokenId: PromiseOrValue<BigNumberish>,
+      exp: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     setMaxClaimed(
-      tokenId: BigNumberish,
-      newMaxClaimed: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      tokenId: PromiseOrValue<BigNumberish>,
+      newMaxClaimed: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     setOpenForSale(
-      tokenId: BigNumberish,
-      check: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      tokenId: PromiseOrValue<BigNumberish>,
+      check: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     setOwner(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     setRoyalityFee(
-      newRoyalityFee: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      newRoyalityFee: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     setSecondaryRoyalityFee(
-      newSecondaryRoyalty: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      newSecondaryRoyalty: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     setShopAddress(
-      _shopAddress: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      _shopAddress: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     setSize(
-      tokenId: BigNumberish,
+      tokenId: PromiseOrValue<BigNumberish>,
       size: BaseObject.SizeStruct,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     setTokenURI(
-      tokenId: BigNumberish,
-      uri: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      tokenId: PromiseOrValue<BigNumberish>,
+      uri: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     setTreasuryAddress(
-      newTreasuryAddress: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      newTreasuryAddress: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     setbaseMetadataURI(
-      newBaseMetadataURI: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      newBaseMetadataURI: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     shopAddress(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     supportsInterface(
-      interfaceId: BytesLike,
+      interfaceId: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     symbol(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     totalSupply(
-      id: BigNumberish,
+      id: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     treasuryAddress(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     uri(
-      tokenId: BigNumberish,
+      tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     withdrawOwnerBalance(
-      withdrawTo: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      withdrawTo: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
   };
 }

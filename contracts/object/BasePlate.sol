@@ -15,9 +15,9 @@ import "@openzeppelin/contracts/token/ERC1155/extensions/ERC1155Supply.sol";
 import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 import { BaseObject } from "../utils/BaseObject.sol";
 
-/// @title WallPaper
-// WallPaper smart contract inherits ERC1155 interface
-contract WallPaper is BaseObject, ERC1155Supply {
+/// @title BasePlate
+// BasePlate smart contract inherits ERC1155 interface
+contract BasePlate is BaseObject, ERC1155Supply {
     /* -------------------------------------------------------------------------- */
     /*                                   CONFIG                                   */
     /* -------------------------------------------------------------------------- */
@@ -26,7 +26,7 @@ contract WallPaper is BaseObject, ERC1155Supply {
     /* -------------------------------------------------------------------------- */
     /*                                   EVENTS                                   */
     /* -------------------------------------------------------------------------- */
-    event CreateWallPaper(
+    event CreateBasePlate(
         uint256 tokenId,
         string tokenUri,
         Size size,
@@ -34,7 +34,7 @@ contract WallPaper is BaseObject, ERC1155Supply {
         uint256 maxClaimed,
         uint256 price
     );
-    event LogBuyWallPaper(address indexed sender, uint256 tokenId, uint256 value);
+    event LogBuyBasePlate(address indexed sender, uint256 tokenId, uint256 value);
 
     /* --------------------------------- ****** --------------------------------- */
     /* -------------------------------------------------------------------------- */
@@ -44,8 +44,8 @@ contract WallPaper is BaseObject, ERC1155Supply {
     constructor(address payable _treasuryAddress, address _phiMapAddress) ERC1155("") {
         require(_treasuryAddress != address(0), "cant set address 0");
         require(_phiMapAddress != address(0), "cant set address 0");
-        name = "Phi Wall Paper";
-        symbol = "Phi-WAL";
+        name = "Phi Base Plate";
+        symbol = "Phi-BAS";
         baseMetadataURI = "https://www.arweave.net/";
         treasuryAddress = _treasuryAddress;
         phiMapAddress = _phiMapAddress;
@@ -89,17 +89,17 @@ contract WallPaper is BaseObject, ERC1155Supply {
     }
 
     /*
-     * @title createWallPaper
-     * @notice create WallPaper for the first time
-     * @param tokenId : WallPaper nft tokenId
+     * @title createBasePlate
+     * @notice create BasePlate for the first time
+     * @param tokenId : BasePlate nft tokenId
      * @param tokenUri : object nft tokenUri
      * @param size : object's size (x,y,z)
      * @param creator : creator address, 0 also allowed.
      * @param maxClaimed : Maximum supply number
-     * @param price : WallPaper price
-     * @dev check that token is not created and set WallPaper settings
+     * @param price : BasePlate price
+     * @dev check that token is not created and set BasePlate settings
      */
-    function createWallPaper(
+    function createBasePlate(
         uint256 tokenId,
         string memory tokenUri,
         Size memory size,
@@ -115,7 +115,7 @@ contract WallPaper is BaseObject, ERC1155Supply {
         changeTokenPrice(tokenId, price);
         setOpenForSale(tokenId, true);
         created[tokenId] = true;
-        emit CreateWallPaper(tokenId, tokenUri, size, creator, maxClaimed, price);
+        emit CreateBasePlate(tokenId, tokenUri, size, creator, maxClaimed, price);
     }
 
     /* --------------------------------- ****** --------------------------------- */
@@ -123,12 +123,12 @@ contract WallPaper is BaseObject, ERC1155Supply {
     /*                                BUY METHOD                                  */
     /* -------------------------------------------------------------------------- */
     /*
-     * @title _buyWallPaper
-     * @notice mint WallPaper to token buyer
-     * @param tokenId : WallPaper nft token_id
+     * @title _buyBasePlate
+     * @notice mint BasePlate to token buyer
+     * @param tokenId : BasePlate nft token_id
      * @dev pay royality to phi wallet and creator
      */
-    function _buyWallPaper(uint256 tokenId) internal {
+    function _buyBasePlate(uint256 tokenId) internal {
         // check the token id exists
         isValid(tokenId);
         // check token is open for sale
@@ -144,14 +144,14 @@ contract WallPaper is BaseObject, ERC1155Supply {
         (bool success1, ) = payable(allObjects[tokenId].creator).call{ value: royality }("");
         require(success1, "cant pay royality");
         (bool success2, ) = payable(treasuryAddress).call{ value: (allObjects[tokenId].price - royality) }("");
-        require(success2, "cant transfer sales");
+        require(success2, "cant transfer sale");
 
         // mint the token
         super._mint(msg.sender, tokenId, 1, "0x");
-        emit LogBuyWallPaper(msg.sender, tokenId, allObjects[tokenId].price);
+        emit LogBuyBasePlate(msg.sender, tokenId, allObjects[tokenId].price);
     }
 
-    function batchWallPaper(uint256[] memory tokenIds) external payable nonReentrant {
+    function batchBasePlate(uint256[] memory tokenIds) external payable nonReentrant {
         uint256 allprice;
         // check if the function caller is not an zero account address
         require(msg.sender != address(0), "msg sender(0) is invalid");
@@ -166,7 +166,7 @@ contract WallPaper is BaseObject, ERC1155Supply {
         require(msg.value >= allprice, "should be equal to or more than the token's price");
 
         for (uint256 i = 0; i < objectLength; ++i) {
-            _buyWallPaper(tokenIds[i]);
+            _buyBasePlate(tokenIds[i]);
         }
     }
 
@@ -179,9 +179,9 @@ contract WallPaper is BaseObject, ERC1155Supply {
      * @notice mint Object to token buyer
      * @param to : reciever address
      * @param tokenId : object nft token_id
-     * @dev only used by batchWallPaperFromShop
+     * @dev only used by batchBasePlateFromShop
      */
-    function _buyWallPaper(address to, uint256 tokenId) internal {
+    function _buyBasePlate(address to, uint256 tokenId) internal {
         // check the token id exists
         isValid(tokenId);
         // check token is open for sale
@@ -201,7 +201,7 @@ contract WallPaper is BaseObject, ERC1155Supply {
 
         // mint the token
         super._mint(to, tokenId, 1, "0x");
-        emit LogBuyWallPaper(to, tokenId, allObjects[tokenId].price);
+        emit LogBuyBasePlate(to, tokenId, allObjects[tokenId].price);
     }
 
     // Return the total value of tokenIds
@@ -215,14 +215,14 @@ contract WallPaper is BaseObject, ERC1155Supply {
     }
 
     /*
-     * @title batchWallPaperFromShop
+     * @title batchBasePlateFromShop
      * @notice mint Object to reciever address
      * @param to : reciever address
      * @param tokenIds : object nft token_id
      * @dev only executed by shop contract
      * @notify This method needs to setShopAddress
      */
-    function batchWallPaperFromShop(address to, uint256[] memory tokenIds) external payable nonReentrant {
+    function batchBasePlateFromShop(address to, uint256[] memory tokenIds) external payable nonReentrant {
         // to prevent bots minting from a contract
         require(msg.sender == shopAddress, "msg sender invalid");
 
@@ -234,7 +234,7 @@ contract WallPaper is BaseObject, ERC1155Supply {
         // price sent in to buy should be equal to or more than the token's price
         require(msg.value >= allprice, "not enough value");
         for (uint256 i = 0; i < tokenIdsLength; ++i) {
-            _buyWallPaper(to, tokenIds[i]);
+            _buyBasePlate(to, tokenIds[i]);
         }
     }
 }

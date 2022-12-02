@@ -17,6 +17,7 @@ interface CreatorAddress {
 export const CreatorAddressEnum: CreatorAddress = {
   eBoy: "0xb7caa0ed757bbfaa208342752c9b1c541e36a4b9",
   ta2nb: "0x143aA7d940482F00872AcC1C31b54127c7E75171",
+  Fuzuki: "0x5A6Ecf67547CD9e97e29124386881Eec436980f9",
 };
 
 export async function settingPhi(): Promise<void> {
@@ -89,7 +90,7 @@ export async function settingPhi(): Promise<void> {
       { x: size[1], y: size[3], z: "0" },
       CreatorAddressEnum[wallPaperRowList[i].creator],
       String(wallPaperRowList[i].maxClaimed),
-      ethers.utils.parseEther("0"),
+      ethers.utils.parseEther(wallPaperRowList[i].price),
     ];
     console.log(calldata);
     res = await wallPaperContractInstance[funcName](...calldata);
@@ -181,6 +182,9 @@ export async function settingPhi(): Promise<void> {
   const DEFAULT_ADMIN_ROLE = "0x0000000000000000000000000000000000000000000000000000000000000000";
   funcName = "grantRole";
   calldata = [DEFAULT_ADMIN_ROLE, phiRegistryAddress];
+  res = await phiMapContractInstance.grantRole(...calldata);
+  console.log("grantRole Response:", res);
+  calldata = [DEFAULT_ADMIN_ROLE, phiShopAddress];
   res = await phiMapContractInstance.grantRole(...calldata);
   console.log("grantRole Response:", res);
 

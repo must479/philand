@@ -82,6 +82,7 @@ contract PhiMap is AccessControlUpgradeable, IERC1155ReceiverUpgradeable, Reentr
     struct Link {
         string title;
         string url;
+        uint256 data;
     }
     /* --------------------------------- ****** --------------------------------- */
 
@@ -89,6 +90,7 @@ contract PhiMap is AccessControlUpgradeable, IERC1155ReceiverUpgradeable, Reentr
     /*                                   STORAGE                                  */
     /* -------------------------------------------------------------------------- */
     /* ---------------------------------- Map ----------------------------------- */
+    //  * @notice Return number of philand
     uint256 public numberOfLand;
     mapping(string => address) public ownerLists;
     /* --------------------------------- OBJECT --------------------------------- */
@@ -131,7 +133,7 @@ contract PhiMap is AccessControlUpgradeable, IERC1155ReceiverUpgradeable, Reentr
         uint256 amount
     );
     /* ---------------------------------- LINK ---------------------------------- */
-    event WriteLink(string name, address contractAddress, uint256 tokenId, string title, string url);
+    event WriteLink(string name, address contractAddress, uint256 tokenId, string title, string url, uint256 data);
     event RemoveLink(string name, uint256 index);
     /* --------------------------------- ****** --------------------------------- */
 
@@ -373,7 +375,7 @@ contract PhiMap is AccessControlUpgradeable, IERC1155ReceiverUpgradeable, Reentr
         string memory name,
         address contractAddress,
         uint256 tokenId
-    ) public {
+    ) internal {
         address lastBasePlateContractAddress = basePlate[name].contractAddress;
         uint256 lastBasePlateTokenId = basePlate[name].tokenId;
         // Withdraw the deposited BasePlate OBJECT at the same time if it has already been deposited
@@ -409,14 +411,6 @@ contract PhiMap is AccessControlUpgradeable, IERC1155ReceiverUpgradeable, Reentr
      */
     function viewPhiland(string memory name) external view returns (ObjectInfo[] memory) {
         return userObject[name];
-    }
-
-    /*
-     * @title viewNumberOfPhiland
-     * @notice Return number of philand
-     */
-    function viewNumberOfPhiland() external view returns (uint256) {
-        return numberOfLand;
     }
 
     /*
@@ -490,7 +484,7 @@ contract PhiMap is AccessControlUpgradeable, IERC1155ReceiverUpgradeable, Reentr
 
         userObject[name].push(writeObjectInfo);
         emit WriteObject(name, objectData.contractAddress, objectData.tokenId, objectData.xStart, objectData.yStart);
-        emit WriteLink(name, objectData.contractAddress, objectData.tokenId, link.title, link.url);
+        emit WriteLink(name, objectData.contractAddress, objectData.tokenId, link.title, link.url, link.data);
     }
 
     /* ----------------------------------- REMOVE -------------------------------- */
@@ -582,7 +576,7 @@ contract PhiMap is AccessControlUpgradeable, IERC1155ReceiverUpgradeable, Reentr
         uint256 wtokenId,
         address bcontractAddress,
         uint256 btokenId
-    ) external onlyNotLocked onlyPhilandOwner(name) {
+    ) external nonReentrant onlyNotLocked onlyPhilandOwner(name) {
         _batchRemoveAndWrite(name, removeIndexArray, objectDatas, links);
         _removeUnUsedUserObject(name);
         if (wcontractAddress != address(0) && wtokenId != 0) {
@@ -927,7 +921,7 @@ contract PhiMap is AccessControlUpgradeable, IERC1155ReceiverUpgradeable, Reentr
         uint256 id,
         uint256 value,
         bytes calldata data
-    ) external pure returns (bytes4) {
+    ) external pure override returns (bytes4) {
         return bytes4(keccak256("onERC1155Received(address,address,uint256,uint256,bytes)"));
     }
 
@@ -937,7 +931,7 @@ contract PhiMap is AccessControlUpgradeable, IERC1155ReceiverUpgradeable, Reentr
         uint256[] memory ids,
         uint256[] memory values,
         bytes calldata data
-    ) external pure returns (bytes4) {
+    ) external pure override returns (bytes4) {
         return bytes4(keccak256("onERC1155BatchReceived(address,address,uint256[],uint256[],bytes)"));
     }
 

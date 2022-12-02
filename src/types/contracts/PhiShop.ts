@@ -31,22 +31,36 @@ import type {
 
 export interface PhiShopInterface extends utils.Interface {
   functions: {
+    "basePlateAddress()": FunctionFragment;
     "freeObjectAddress()": FunctionFragment;
+    "mapAddress()": FunctionFragment;
     "premiumObjectAddress()": FunctionFragment;
-    "shopBuyObject(address,uint256[],uint256[],uint256[])": FunctionFragment;
+    "shopBuyAndDepositObject(string,uint256[],uint256[],uint256[],uint256[],address[],uint256[],uint256[])": FunctionFragment;
+    "shopBuyObject(address,uint256[],uint256[],uint256[],uint256[])": FunctionFragment;
     "wallPaperAddress()": FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
+      | "basePlateAddress"
       | "freeObjectAddress"
+      | "mapAddress"
       | "premiumObjectAddress"
+      | "shopBuyAndDepositObject"
       | "shopBuyObject"
       | "wallPaperAddress"
   ): FunctionFragment;
 
   encodeFunctionData(
+    functionFragment: "basePlateAddress",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
     functionFragment: "freeObjectAddress",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "mapAddress",
     values?: undefined
   ): string;
   encodeFunctionData(
@@ -54,9 +68,23 @@ export interface PhiShopInterface extends utils.Interface {
     values?: undefined
   ): string;
   encodeFunctionData(
+    functionFragment: "shopBuyAndDepositObject",
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>[],
+      PromiseOrValue<BigNumberish>[],
+      PromiseOrValue<BigNumberish>[],
+      PromiseOrValue<BigNumberish>[],
+      PromiseOrValue<string>[],
+      PromiseOrValue<BigNumberish>[],
+      PromiseOrValue<BigNumberish>[]
+    ]
+  ): string;
+  encodeFunctionData(
     functionFragment: "shopBuyObject",
     values: [
       PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>[],
       PromiseOrValue<BigNumberish>[],
       PromiseOrValue<BigNumberish>[],
       PromiseOrValue<BigNumberish>[]
@@ -68,11 +96,20 @@ export interface PhiShopInterface extends utils.Interface {
   ): string;
 
   decodeFunctionResult(
-    functionFragment: "freeObjectAddress",
+    functionFragment: "basePlateAddress",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
+    functionFragment: "freeObjectAddress",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "mapAddress", data: BytesLike): Result;
+  decodeFunctionResult(
     functionFragment: "premiumObjectAddress",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "shopBuyAndDepositObject",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -86,9 +123,11 @@ export interface PhiShopInterface extends utils.Interface {
 
   events: {
     "LogShopBuyObject(address,address,uint256,uint256)": EventFragment;
+    "ShopDepositSuccess(address,string,uint256)": EventFragment;
   };
 
   getEvent(nameOrSignatureOrTopic: "LogShopBuyObject"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "ShopDepositSuccess"): EventFragment;
 }
 
 export interface LogShopBuyObjectEventObject {
@@ -104,6 +143,19 @@ export type LogShopBuyObjectEvent = TypedEvent<
 
 export type LogShopBuyObjectEventFilter =
   TypedEventFilter<LogShopBuyObjectEvent>;
+
+export interface ShopDepositSuccessEventObject {
+  sender: string;
+  name: string;
+  depositAmount: BigNumber;
+}
+export type ShopDepositSuccessEvent = TypedEvent<
+  [string, string, BigNumber],
+  ShopDepositSuccessEventObject
+>;
+
+export type ShopDepositSuccessEventFilter =
+  TypedEventFilter<ShopDepositSuccessEvent>;
 
 export interface PhiShop extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
@@ -132,45 +184,96 @@ export interface PhiShop extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
+    basePlateAddress(overrides?: CallOverrides): Promise<[string]>;
+
     freeObjectAddress(overrides?: CallOverrides): Promise<[string]>;
 
+    mapAddress(overrides?: CallOverrides): Promise<[string]>;
+
     premiumObjectAddress(overrides?: CallOverrides): Promise<[string]>;
+
+    shopBuyAndDepositObject(
+      name: PromiseOrValue<string>,
+      ftokenIds: PromiseOrValue<BigNumberish>[],
+      ptokenIds: PromiseOrValue<BigNumberish>[],
+      wtokenIds: PromiseOrValue<BigNumberish>[],
+      btokenIds: PromiseOrValue<BigNumberish>[],
+      depoitContractAddresses: PromiseOrValue<string>[],
+      depoitTokenIds: PromiseOrValue<BigNumberish>[],
+      depoitAmounts: PromiseOrValue<BigNumberish>[],
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
 
     shopBuyObject(
       receiverAddress: PromiseOrValue<string>,
       ftokenIds: PromiseOrValue<BigNumberish>[],
       ptokenIds: PromiseOrValue<BigNumberish>[],
       wtokenIds: PromiseOrValue<BigNumberish>[],
+      btokenIds: PromiseOrValue<BigNumberish>[],
       overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     wallPaperAddress(overrides?: CallOverrides): Promise<[string]>;
   };
 
+  basePlateAddress(overrides?: CallOverrides): Promise<string>;
+
   freeObjectAddress(overrides?: CallOverrides): Promise<string>;
 
+  mapAddress(overrides?: CallOverrides): Promise<string>;
+
   premiumObjectAddress(overrides?: CallOverrides): Promise<string>;
+
+  shopBuyAndDepositObject(
+    name: PromiseOrValue<string>,
+    ftokenIds: PromiseOrValue<BigNumberish>[],
+    ptokenIds: PromiseOrValue<BigNumberish>[],
+    wtokenIds: PromiseOrValue<BigNumberish>[],
+    btokenIds: PromiseOrValue<BigNumberish>[],
+    depoitContractAddresses: PromiseOrValue<string>[],
+    depoitTokenIds: PromiseOrValue<BigNumberish>[],
+    depoitAmounts: PromiseOrValue<BigNumberish>[],
+    overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
 
   shopBuyObject(
     receiverAddress: PromiseOrValue<string>,
     ftokenIds: PromiseOrValue<BigNumberish>[],
     ptokenIds: PromiseOrValue<BigNumberish>[],
     wtokenIds: PromiseOrValue<BigNumberish>[],
+    btokenIds: PromiseOrValue<BigNumberish>[],
     overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   wallPaperAddress(overrides?: CallOverrides): Promise<string>;
 
   callStatic: {
+    basePlateAddress(overrides?: CallOverrides): Promise<string>;
+
     freeObjectAddress(overrides?: CallOverrides): Promise<string>;
 
+    mapAddress(overrides?: CallOverrides): Promise<string>;
+
     premiumObjectAddress(overrides?: CallOverrides): Promise<string>;
+
+    shopBuyAndDepositObject(
+      name: PromiseOrValue<string>,
+      ftokenIds: PromiseOrValue<BigNumberish>[],
+      ptokenIds: PromiseOrValue<BigNumberish>[],
+      wtokenIds: PromiseOrValue<BigNumberish>[],
+      btokenIds: PromiseOrValue<BigNumberish>[],
+      depoitContractAddresses: PromiseOrValue<string>[],
+      depoitTokenIds: PromiseOrValue<BigNumberish>[],
+      depoitAmounts: PromiseOrValue<BigNumberish>[],
+      overrides?: CallOverrides
+    ): Promise<void>;
 
     shopBuyObject(
       receiverAddress: PromiseOrValue<string>,
       ftokenIds: PromiseOrValue<BigNumberish>[],
       ptokenIds: PromiseOrValue<BigNumberish>[],
       wtokenIds: PromiseOrValue<BigNumberish>[],
+      btokenIds: PromiseOrValue<BigNumberish>[],
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -190,18 +293,46 @@ export interface PhiShop extends BaseContract {
       buyCount?: null,
       buyValue?: null
     ): LogShopBuyObjectEventFilter;
+
+    "ShopDepositSuccess(address,string,uint256)"(
+      sender?: null,
+      name?: null,
+      depositAmount?: null
+    ): ShopDepositSuccessEventFilter;
+    ShopDepositSuccess(
+      sender?: null,
+      name?: null,
+      depositAmount?: null
+    ): ShopDepositSuccessEventFilter;
   };
 
   estimateGas: {
+    basePlateAddress(overrides?: CallOverrides): Promise<BigNumber>;
+
     freeObjectAddress(overrides?: CallOverrides): Promise<BigNumber>;
 
+    mapAddress(overrides?: CallOverrides): Promise<BigNumber>;
+
     premiumObjectAddress(overrides?: CallOverrides): Promise<BigNumber>;
+
+    shopBuyAndDepositObject(
+      name: PromiseOrValue<string>,
+      ftokenIds: PromiseOrValue<BigNumberish>[],
+      ptokenIds: PromiseOrValue<BigNumberish>[],
+      wtokenIds: PromiseOrValue<BigNumberish>[],
+      btokenIds: PromiseOrValue<BigNumberish>[],
+      depoitContractAddresses: PromiseOrValue<string>[],
+      depoitTokenIds: PromiseOrValue<BigNumberish>[],
+      depoitAmounts: PromiseOrValue<BigNumberish>[],
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
 
     shopBuyObject(
       receiverAddress: PromiseOrValue<string>,
       ftokenIds: PromiseOrValue<BigNumberish>[],
       ptokenIds: PromiseOrValue<BigNumberish>[],
       wtokenIds: PromiseOrValue<BigNumberish>[],
+      btokenIds: PromiseOrValue<BigNumberish>[],
       overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -209,10 +340,26 @@ export interface PhiShop extends BaseContract {
   };
 
   populateTransaction: {
+    basePlateAddress(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     freeObjectAddress(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    mapAddress(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     premiumObjectAddress(
       overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    shopBuyAndDepositObject(
+      name: PromiseOrValue<string>,
+      ftokenIds: PromiseOrValue<BigNumberish>[],
+      ptokenIds: PromiseOrValue<BigNumberish>[],
+      wtokenIds: PromiseOrValue<BigNumberish>[],
+      btokenIds: PromiseOrValue<BigNumberish>[],
+      depoitContractAddresses: PromiseOrValue<string>[],
+      depoitTokenIds: PromiseOrValue<BigNumberish>[],
+      depoitAmounts: PromiseOrValue<BigNumberish>[],
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     shopBuyObject(
@@ -220,6 +367,7 @@ export interface PhiShop extends BaseContract {
       ftokenIds: PromiseOrValue<BigNumberish>[],
       ptokenIds: PromiseOrValue<BigNumberish>[],
       wtokenIds: PromiseOrValue<BigNumberish>[],
+      btokenIds: PromiseOrValue<BigNumberish>[],
       overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
